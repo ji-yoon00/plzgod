@@ -1,0 +1,78 @@
+<?xml version="1.0" encoding="utf-8"?>
+<FrameLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:id="@+id/tmap_view_container"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent">
+
+    <!-- TMapView가 위치할 컨테이너 -->
+    <FrameLayout
+        android:id="@+id/tmap_overlay_container"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent" />
+
+    <ImageView
+        android:id="@+id/foregroundImage1"
+        android:layout_width="wrap_content"
+        android:layout_height="150dp"
+        android:src="@drawable/mainrectangle"
+        android:scaleType="fitXY"
+        android:alpha="1"
+        android:layout_alignParentTop="true"/>
+
+    <ImageView
+        android:id="@+id/foregroundImage2"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:src="@drawable/menu"
+        android:layout_marginLeft="25dp"
+        android:layout_marginTop="25dp"
+        android:alpha="1"
+        android:layout_alignParentTop="true"
+        android:layout_alignParentStart="true"/>
+
+    <ImageView
+        android:id="@+id/foregroundImage3"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:src="@drawable/searchrectangle"
+        android:layout_marginLeft="40dp"
+        android:layout_marginTop="80dp"
+        android:alpha="1"
+        android:layout_alignParentTop="true"
+        android:layout_alignParentStart="true"/>
+
+    <ImageView
+        android:id="@+id/foregroundImage4"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:src="@drawable/wastebasket"
+        android:layout_marginLeft="290dp"
+        android:layout_marginTop="180dp"
+        android:alpha="1"
+        android:layout_alignParentTop="true"
+        android:layout_alignParentStart="true"
+        android:clickable="true"
+        android:focusable="true" />
+
+    <ImageView
+        android:id="@+id/foregroundImage5"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:src="@drawable/people"
+        android:layout_marginLeft="285dp"
+        android:layout_marginTop="240dp"
+        android:alpha="1"
+        android:layout_alignParentTop="true"
+        android:layout_alignParentStart="true"/>
+
+    <ImageView
+        android:id="@+id/foregroundImage6"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:src="@drawable/light"
+        android:layout_marginLeft="290dp"
+        android:layout_marginTop="300dp"
+        android:alpha="1"
+        android:layout_alignParentTop="true"
+        android:layout_alignParentStart="true"/>
+</FrameLayout>
