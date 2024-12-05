@@ -7,12 +7,22 @@ import android.widget.ImageView
 import androidx.appcompat.app.AppCompatActivity
 import com.skt.tmap.TMapView
 import java.io.File
+import android.view.View
+import android.view.inputmethod.InputMethodManager
+import android.widget.EditText
+import android.widget.Toast
+import android.content.Context
 
 class MainActivity : AppCompatActivity() {
     private var isWMarkerVisible = false // 쓰레기통 마커 상태
     private var isLMarkerVisible = false // 쓰레기통 마커 상태
     private lateinit var wmarkerManager: WasteMarkerManager
     private lateinit var lmarkerManager: LightMarkerManager
+    private lateinit var tMapView: TMapView
+    private lateinit var searchManager: SearchManager
+    private var isWasteIconChanged = false // 쓰레기통 아이콘 상태
+    private var isLightIconChanged = false // 가로등 아이콘 상태
+
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -36,6 +46,51 @@ class MainActivity : AppCompatActivity() {
         wmarkerManager = WasteMarkerManager(this, tMapView)
         // LMarkerManager 초기화
         lmarkerManager = LightMarkerManager(this, tMapView)
+        // SearchManager 초기화
+        searchManager = SearchManager(this, tMapView)
+
+        // 검색창 및 버튼 초기화
+        val searchEditText = findViewById<EditText>(R.id.searchEditText)
+        val searchIcon = findViewById<ImageView>(R.id.searchIcon)
+        val searchRectangle = findViewById<ImageView>(R.id.foregroundImage3)
+
+        searchRectangle.setOnClickListener {
+            searchEditText.visibility = View.VISIBLE
+            searchEditText.requestFocus() // 검색창에 포커스 설정
+            // 키보드 표시
+            val imm = applicationContext.getSystemService(Context.INPUT_METHOD_SERVICE) as InputMethodManager
+            searchEditText.post {
+                imm.showSoftInput(searchEditText, InputMethodManager.SHOW_IMPLICIT)
+            }
+        }
+
+        searchEditText.setOnEditorActionListener { _, actionId, _ ->
+            if (actionId == android.view.inputmethod.EditorInfo.IME_ACTION_SEARCH) {
+                val keyword = searchEditText.text.toString().trim()
+                if (keyword.isNotEmpty()) {
+                    try {
+                        searchManager.performSearch(keyword)
+                        // 검색 후 동작
+                        searchEditText.clearFocus()
+                        searchEditText.visibility = View.GONE
+                        searchIcon.visibility = View.VISIBLE
+
+                        // 키보드 숨기기
+                        val imm = getSystemService(Context.INPUT_METHOD_SERVICE) as InputMethodManager
+                        imm.hideSoftInputFromWindow(searchEditText.windowToken, 0)
+                    } catch (e: Exception) {
+                        Log.e("SearchError", "검색 중 예외 발생: ${e.message}")
+                        Toast.makeText(this, "검색 중 문제가 발생했습니다.", Toast.LENGTH_SHORT).show()
+                    }
+                } else {
+                    Toast.makeText(this@MainActivity, "검색어를 입력하세요", Toast.LENGTH_SHORT).show()
+                }
+                true // 이벤트 처리 완료
+            } else {
+                false // 다른 이벤트 처리
+            }
+        }
+
 
         // 콜백 설정
         tMapView.setOnApiKeyListenerCallback(object : TMapView.OnApiKeyListenerCallback {
@@ -47,8 +102,15 @@ class MainActivity : AppCompatActivity() {
                     // 지도 중심 좌표 설정
                     tMapView.setCenterPoint(127.0, 37.0, true) // 기본 TM128 좌표
 
+
                     // wasteBasket 클릭 이벤트 설정
                     wasteBasket.setOnClickListener {
+                        if (isWasteIconChanged) {
+                            wasteBasket.setImageResource(R.drawable.wastebasket) // 원래 아이콘
+                        } else {
+                            wasteBasket.setImageResource(R.drawable.wastebasket_alternate) // 다른 아이콘
+                        }
+                        isWasteIconChanged = !isWasteIconChanged // 상태 변경
                         try {
                             if (isWMarkerVisible) {
                                 wmarkerManager.clearAllMarkers() // 모든 마커 제거
@@ -76,6 +138,12 @@ class MainActivity : AppCompatActivity() {
 
                     // light 클릭 이벤트 설정
                     light.setOnClickListener {
+                        if (isLightIconChanged) {
+                            light.setImageResource(R.drawable.light) // 원래 아이콘
+                        } else {
+                            light.setImageResource(R.drawable.light_alternate) // 다른 아이콘
+                        }
+                        isLightIconChanged = !isLightIconChanged // 상태 변경
                         try {
                             if (isLMarkerVisible) {
                                 lmarkerManager.clearAllMarkers() // 모든 마커 제거
@@ -88,12 +156,12 @@ class MainActivity : AppCompatActivity() {
                                         // 좌표 유효성 검사
                                         val tm128Longitude = marker.tm128Longitude
                                         val tm128Latitude = marker.tm128Latitude
-                                                lmarkerManager.addMarker(
-                                                id = marker.id,
-                                                tm128Latitude = marker.tm128Latitude,
-                                                tm128Longitude = marker.tm128Longitude,
-                                                title = marker.title,
-                                                )
+                                        lmarkerManager.addMarker(
+                                            id = marker.id,
+                                            tm128Latitude = marker.tm128Latitude,
+                                            tm128Longitude = marker.tm128Longitude,
+                                            title = marker.title,
+                                        )
                                     }
                                 }
                             }
@@ -113,7 +181,6 @@ class MainActivity : AppCompatActivity() {
         // UI 요소들 가져오기
         val mainRectangle = findViewById<ImageView>(R.id.foregroundImage1)
         val menuImage = findViewById<ImageView>(R.id.foregroundImage2)
-        val searchRectangle = findViewById<ImageView>(R.id.foregroundImage3)
         val peoPle = findViewById<ImageView>(R.id.foregroundImage5)
 
         // UI 요소 순서 설정
@@ -123,6 +190,9 @@ class MainActivity : AppCompatActivity() {
         wasteBasket.bringToFront()
         peoPle.bringToFront()
         light.bringToFront()
+        searchRectangle.bringToFront()
+        searchIcon.bringToFront()
+        searchEditText.bringToFront()
     }
 
     // 파일 복사 함수
