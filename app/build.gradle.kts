@@ -68,4 +68,10 @@ dependencies {
     // Optional - For Compose debugging tools
     debugImplementation("androidx.compose.ui:ui-tooling:1.5.0")
     debugImplementation("androidx.compose.ui:ui-test-manifest:1.5.0")
+
+    implementation("org.apache.poi:poi:5.2.3")
+    implementation("org.apache.poi:poi-ooxml:5.2.3")
+    implementation("org.apache.xmlbeans:xmlbeans:5.1.1")
+    implementation("javax.xml.stream:stax-api:1.0-2")
+
 }
