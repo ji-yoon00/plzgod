@@ -5,10 +5,10 @@ import org.apache.poi.ss.usermodel.WorkbookFactory
 import java.io.File
 import java.io.FileInputStream
 
-object ExcelMarkerReader {
+object ExcelWasteMarkerReader {
 
-    private const val TAG = "ExcelMarkerReader"
-    fun readMarkersFromExcel(file: File): List<WasteMarkerData> {
+    private const val TAG = "ExcelWMarkerReader"
+    fun readWMarkersFromExcel(file: File): List<WasteMarkerData> {
         val markerList = mutableListOf<WasteMarkerData>()
 
         if (!file.exists()) {

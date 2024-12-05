@@ -8,23 +8,22 @@ import com.skt.tmap.TMapView
 import com.skt.tmap.overlay.TMapMarkerItem
 import com.skt.tmap.TMapPoint
 
-class lightMarker(private val context: Context, private val tMapView: TMapView) {
+class LightMarkerManager(private val context: Context, private val tMapView: TMapView) {
     private val markers = mutableMapOf<String, TMapMarkerItem>()
 
     // 마커 생성 및 설정
-    fun addMarker(id: String, xx: Double, yy: Double, title: String) {
-        val xxyy = TMapPoint(xx, yy)
+    fun addMarker(id: String, tm128Latitude: Double, tm128Longitude: Double, title: String) {
+        val tm128Point = TMapPoint(tm128Latitude, tm128Longitude)
 
         // TMapMarkerItem 생성
         val markerItem = TMapMarkerItem().apply {
-            tMapPoint = xxyy
+            tMapPoint = tm128Point
             name = title
             canShowCallout = true
             calloutTitle = title
             this.id = id
             // 원본 Bitmap 로드
-            val originalBitmap = BitmapFactory.decodeResource(context.resources, R.drawable.wastebasketicon)
-
+            val originalBitmap = BitmapFactory.decodeResource(context.resources, R.drawable.lighticon)
             // 크기 조정 (100x100으로 예시)
             val scaledBitmap = Bitmap.createScaledBitmap(originalBitmap, 50, 50, true)
             icon = scaledBitmap // 크기 조정된 Bitmap을 마커 아이콘으로 설정
@@ -36,7 +35,7 @@ class lightMarker(private val context: Context, private val tMapView: TMapView) 
         try {
             tMapView.addTMapMarkerItem(markerItem)
         } catch (e: Exception) {
-            Log.e("lightMarker", "마커 추가 중 오류 발생: ${e.message}")
+            Log.e("MarkerManager", "마커 추가 중 오류 발생: ${e.message}")
         }
     }
 
