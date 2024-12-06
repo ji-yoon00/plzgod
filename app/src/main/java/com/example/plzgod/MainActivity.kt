@@ -19,10 +19,9 @@ class MainActivity : AppCompatActivity() {
     private lateinit var wmarkerManager: WasteMarkerManager
     private lateinit var lmarkerManager: LightMarkerManager
     private lateinit var tMapView: TMapView
-    private lateinit var searchManager: SearchManager
-    private var isWasteIconChanged = false // 쓰레기통 아이콘 상태
     private var isLightIconChanged = false // 가로등 아이콘 상태
-
+    private var isWasteIconChanged = false // 쓰레기통 아이콘 상태
+    private lateinit var searchManager: SearchManager
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -32,10 +31,9 @@ class MainActivity : AppCompatActivity() {
         val wasteBasket = findViewById<ImageView>(R.id.foregroundImage4)
         val light = findViewById<ImageView>(R.id.foregroundImage6)
 
-        // 파일 복사
+        //파일복사
         copyFileToInternalStorage("wastebasketlocation.xlsx")
         copyFileToInternalStorage("lightlocation.xlsx")
-
         // TMapView 초기화
         val tMapView = TMapView(this).apply {
             setSKTMapApiKey("F9wKkfk1Vo7fe83G574bx7OOE2MVgpHY4Km4uZ0V") // API Key 설정
