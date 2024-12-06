@@ -12,6 +12,8 @@ import android.view.inputmethod.InputMethodManager
 import android.widget.EditText
 import android.widget.Toast
 import android.content.Context
+import android.widget.Button
+import android.widget.LinearLayout
 
 class MainActivity : AppCompatActivity() {
     private var isWMarkerVisible = false // 쓰레기통 마커 상태
@@ -30,6 +32,7 @@ class MainActivity : AppCompatActivity() {
         val frameLayout = findViewById<FrameLayout>(R.id.tmap_view_container)
         val wasteBasket = findViewById<ImageView>(R.id.foregroundImage4)
         val light = findViewById<ImageView>(R.id.foregroundImage6)
+        val routeButton = findViewById<Button>(R.id.routeButton)
 
         //파일복사
         copyFileToInternalStorage("wastebasketlocation.xlsx")
@@ -191,6 +194,7 @@ class MainActivity : AppCompatActivity() {
         searchRectangle.bringToFront()
         searchIcon.bringToFront()
         searchEditText.bringToFront()
+        routeButton.bringToFront()
     }
 
     // 파일 복사 함수
