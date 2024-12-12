@@ -27,6 +27,26 @@
         android:layout_marginLeft="25dp"
         android:layout_marginTop="25dp"
         android:alpha="1"
+        android:clickable="true"
+        android:layout_alignParentTop="true"
+        android:layout_alignParentStart="true"/>
+
+    <ImageView
+        android:id="@+id/help"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:src="@drawable/help"
+        android:contentDescription="Help Screen"
+        android:visibility="gone" />
+
+    <ImageView
+        android:id="@+id/mainmain"
+        android:layout_width="40dp"
+        android:layout_height="40dp"
+        android:src="@drawable/mainmain"
+        android:layout_marginLeft="160dp"
+        android:layout_marginTop="20dp"
+        android:alpha="1"
         android:layout_alignParentTop="true"
         android:layout_alignParentStart="true"/>
 
@@ -101,4 +121,10 @@
         android:alpha="1"
         android:layout_alignParentTop="true"
         android:layout_alignParentStart="true"/>
+
+    <WebView
+        android:id="@+id/webView"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:visibility="visible" />
 </FrameLayout>

@@ -1,0 +1,118 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1, user-scalable=no">
+    <title>Heatmap Test</title>
+    <script src="https://cdn.jsdelivr.net/npm/heatmap.js"></script>
+    <style>
+        body, html {
+            margin: 0;
+            padding: 0;
+            width: 100%;
+            height: 100%;
+        }
+        #heatmapContainer {
+            width: 100%;
+            height: 100%;
+            position: relative;
+            background: rgba(255, 255, 255, 0.8);
+        }
+    </style>
+</head>
+<body>
+<div id="heatmapContainer"></div>
+
+<script>
+    window.onload = function () {
+        const container = document.getElementById('heatmapContainer');
+        console.log("[Heatmap] Container loaded:", container);
+
+        // 히트맵 생성
+        var heatmap = h337.create({
+            container: container,
+            radius: 50,
+            maxOpacity: 0.8,
+            blur: 0.9,
+            gradient: {
+                '0': 'blue',
+                '0.5': 'yellow',
+                '1': 'red'
+            }
+        });
+
+        // 테스트 데이터
+        const testData = {
+            max: 500,
+            data: [
+         { lat: 37.5759, lng: 126.9769, value: 300 }, // 광화문
+    { lat: 37.5702, lng: 126.9828, value: 400 }, // 종각역
+    { lat: 37.5716, lng: 126.9919, value: 350 }, // 종로3가역
+    { lat: 37.5765, lng: 126.9850, value: 250 }, // 안국역
+    { lat: 37.5786, lng: 126.9770, value: 300 }, // 경복궁
+    { lat: 37.5684, lng: 126.9784, value: 450 }, // 청계천
+    { lat: 37.5743, lng: 126.9852, value: 200 }, // 인사동
+    { lat: 37.5703, lng: 126.9896, value: 150 }, // 탑골공원
+    { lat: 37.5792, lng: 126.9723, value: 180 }, // 서촌
+    { lat: 37.5822, lng: 126.9836, value: 220 }, // 북촌 한옥마을
+    { lat: 37.5825, lng: 126.9910, value: 190 }, // 창덕궁
+    { lat: 37.5760, lng: 126.9868, value: 160 }, // 운현궁
+    { lat: 37.5647, lng: 126.9746, value: 410 }, // 서울역
+    { lat: 37.5671, lng: 126.9786, value: 320 }, // 시청역
+    { lat: 37.5636, lng: 126.9820, value: 180 }, // 을지로입구역
+    { lat: 37.5630, lng: 126.9972, value: 120 }, // 동대문역사문화공원
+    { lat: 37.5703, lng: 126.9925, value: 290 }, // 창경궁
+    { lat: 37.5748, lng: 126.9832, value: 310 }, // 조계사
+    { lat: 37.5725, lng: 126.9757, value: 270 }, // 세종문화회관
+    { lat: 37.5666, lng: 126.9919, value: 190 }, // 명동성당
+    { lat: 37.5639, lng: 126.9770, value: 300 }, // 남대문시장
+    { lat: 37.5730, lng: 126.9810, value: 210 }, // 교보문고 광화문점
+    { lat: 37.5732, lng: 126.9835, value: 240 }, // 종로타워
+    { lat: 37.5680, lng: 126.9820, value: 250 }, // 을지로2가
+    { lat: 37.5663, lng: 126.9810, value: 280 }, // 롯데백화점 본점
+    { lat: 37.5723, lng: 126.9858, value: 190 }, // 아트센터
+    { lat: 37.5646, lng: 126.9867, value: 150 }, // 을지로3가
+    { lat: 37.5611, lng: 126.9803, value: 130 }, // 충무로역
+    { lat: 37.5718, lng: 126.9784, value: 350 }, // 덕수궁
+    { lat: 37.5663, lng: 126.9752, value: 220 }, // 숭례문
+    { lat: 37.5679, lng: 126.9766, value: 310 }, // 서울특별시청
+    { lat: 37.5634, lng: 126.9790, value: 270 }, // 남산골 한옥마을
+    { lat: 37.5721, lng: 126.9772, value: 330 }, // 광화문광장
+    { lat: 37.5616, lng: 126.9852, value: 140 }, // 필동
+    { lat: 37.5643, lng: 126.9830, value: 180 }, // 을지로4가
+    { lat: 37.5674, lng: 126.9878, value: 200 }, // 명동역
+    { lat: 37.5683, lng: 126.9912, value: 310 }, // 남산타워
+    { lat: 37.5605, lng: 126.9847, value: 120 }, // 동대문디자인플라자
+    { lat: 37.5790, lng: 126.9804, value: 260 }, // 삼청동길
+    { lat: 37.5801, lng: 126.9786, value: 200 }, // 국립현대미술관
+    { lat: 37.5815, lng: 126.9780, value: 230 }, // 계동길
+    { lat: 37.5628, lng: 126.9862, value: 180 }, // 을지로5가
+    { lat: 37.5672, lng: 126.9723, value: 260 }, // 서울역사박물관
+    { lat: 37.5622, lng: 126.9796, value: 200 }, // 충정로역
+    { lat: 37.5612, lng: 126.9808, value: 190 }, // 흥인지문
+    { lat: 37.5701, lng: 126.9805, value: 280 }, // 북창동
+    { lat: 37.5735, lng: 126.9802, value: 290 }, // 서린동
+    { lat: 37.5778, lng: 126.9789, value: 210 }, // 금천교시장
+    { lat: 37.5783, lng: 126.9768, value: 180 }  // 도렴동
+    ]
+        };
+
+        // 히트맵 업데이트
+        updateHeatmap(testData);
+
+        function updateHeatmap(data) {
+            console.log("[Heatmap] Applying data:", data);
+            heatmap.setData({
+                max: data.max,
+                data: data.data.map(point => ({
+                    x: Math.floor(Math.random() * container.offsetWidth),
+                    y: Math.floor(Math.random() * container.offsetHeight),
+                    value: point.value
+                }))
+            });
+            console.log("[Heatmap] Heatmap updated!");
+        }
+    };
+</script>
+</body>
+</html>

@@ -11,7 +11,7 @@ import com.skt.tmap.poi.TMapPOIItem
 import java.util.UUID
 
 class SearchManager(private val context: Context, private val tMapView: TMapView) {
-
+    var firstPOI: TMapPOIItem? = null
     // 장소 검색 메서드
     fun performSearch(keyword: String) {
         val tMapData = TMapData()
@@ -23,6 +23,17 @@ class SearchManager(private val context: Context, private val tMapView: TMapView
                     Log.e("SearchManager", "검색 결과가 없습니다.")
                     showToast("검색 결과가 없습니다.")
                     return
+                }
+                // 첫 번째 POI 저장
+                firstPOI = poiItemList[0]
+                val latitude = firstPOI!!.poiPoint.latitude
+                val longitude = firstPOI!!.poiPoint.longitude
+                Log.d("SearchManager", "첫 번째 검색 결과: ${firstPOI!!.poiName} (${latitude}, ${longitude})")
+
+                // 지도 중심 이동
+                tMapView.post {
+                    tMapView.setCenterPoint(longitude, latitude, true)
+                    Log.d("SearchManager", "지도 중심 이동 완료")
                 }
                 // 지도에 마커 표시
                 updateMapWithPOI(poiItemList)
